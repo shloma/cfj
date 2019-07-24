@@ -314,25 +314,24 @@
         "myLb"
       ]
     }
-  }
-},
-"Outputs":{
-  "URL":{
-    "Value":{
-      "Fn::Join":[
-        "",
-        [
-          "http://",
-          {
-            "Fn::GetAtt":[
-              "MyEC2instance",
-              "PublicIp"
-            ]
-          }
+  },
+  "Outputs":{
+    "URL":{
+      "Value":{
+        "Fn::Join":[
+          "",
+          [
+            "http://",
+            {
+              "Fn::GetAtt":[
+                "MyEC2instance",
+                "PublicIp"
+              ]
+            }
+          ]
         ]
-      ]
-    },
-    "Description":"Newly created application URL"
+      },
+      "Description":"Newly created application URL"
+    }
   }
-}
 }
