@@ -264,16 +264,6 @@
   "MyELB":{
     "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
     "Properties":{
-      "CrossZone":1,
-      "HealthCheck":{
-        "HealthyThreshold":2,
-        "Interval":5,
-        "Target":{
-          "Ref":"MyEC2instance"
-        },
-        "Timeout":2,
-        "UnhealthyThreshold":3
-      },
       "Instances":{
         "Ref":"MyEC2instance"
       },
