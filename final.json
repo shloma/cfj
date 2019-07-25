@@ -295,6 +295,39 @@
           "Timeout": "PT5M"
         }
       }
+    },
+    "MyELB":{
+    "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
+    "Properties":{
+      "Instances":{
+        "Ref":"MyEC2instance"
+      },
+      "LBCookieStickinessPolicy":[
+        {
+          "CookieExpirationPeriod":30,
+          "PolicyName":"UniqNameLB"
+        }
+      ],
+      "Listeners":[
+        {
+          "InstancePort":80,
+          "InstanceProtocol":"HTTP",
+          "LoadBalancerPort":80,
+          "Protocol":"HTTP"
+        }
+      ],
+      "LoadBalancerName":"UniqNameForLB",
+      "SecurityGroups":[
+        {
+          "Ref":"WebServerSecurityGroup"
+        }
+      ],
+      "Subnets":{
+        "Ref":"PublicSubnet"
+      },
+      "Tags":[
+        "myLb"
+      ]
     }
   },
   "Outputs": {
