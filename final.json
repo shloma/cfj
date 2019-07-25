@@ -308,7 +308,16 @@
         }
       ],
       "Subnets":{
-        "Ref":"PublicSubnet"
+        "Tags" : [
+          {
+            "Key" : "Name",
+            "Value" : "tag1"
+          },
+          {
+            "Key" : "Name",
+            "Value" : "tag2"
+          }
+        ]
       }
     }
   }
