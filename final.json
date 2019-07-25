@@ -214,6 +214,20 @@
     },
     "MyEC2instance":{
       "Type":"AWS::EC2::Instance",
+      "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "config": {
+                        "files": {
+                            "/tmp/test.txt": {
+                                "content": "Hello world!",
+                                "mode": "000755",
+                                "owner": "root",
+                                "group": "root"
+                            }
+                        }
+                    }
+                }
+            },
       "Properties":{
         "InstanceType":{
           "Ref":"InstanceType"
