@@ -306,7 +306,7 @@
             "http://",
             {
               "Fn::GetAtt": [
-                "WebServerInstance",
+                "MyEC2instance",
                 "PublicIp"
               ]
             }
