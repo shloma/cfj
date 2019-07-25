@@ -306,9 +306,12 @@
           "LoadBalancerPort":80,
           "Protocol":"HTTP"
         }
-      ]
+      ],
+      "Subnets":{
+        "Ref":"PublicSubnet"
+      }
     }
-  },
+  }
 
 }
 }
