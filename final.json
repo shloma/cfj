@@ -280,7 +280,7 @@
                 {
                   "Ref": "AWS::StackName"
                 },
-                "         --resource MyEC2instance ",
+                "         --resource MyEC2instance",
                 "         --configsets All ",
                 "         --region ",
                 {
@@ -293,7 +293,7 @@
                 {
                   "Ref": "AWS::StackName"
                 },
-                "         --resource MyEC2instance ",
+                "         --resource MyEC2instance",
                 "         --region ",
                 {
                   "Ref": "AWS::Region"
