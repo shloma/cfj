@@ -5,126 +5,6 @@
 
   "Parameters" : {
 
-
-    "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
-
-    "VpcAzs": {
-      "Description": "Comma-delimited list of three CIDR blocks",
-      "Type": "CommaDelimitedList",
-      "Default": "us-east-1a , us-east-1b , us-east-1c"
-    },
-
-    "VPC":{
-      "Type":"AWS::EC2::VPC",
-      "Properties":{
-        "EnableDnsSupport":"false",
-        "EnableDnsHostnames":"false",
-        "CidrBlock":"10.0.0.0/16"
-      }
-    },
-    "DbSubnetIpBlocks": {
-      "Description": "Comma-delimited list of three CIDR blocks",
-      "Type": "CommaDelimitedList",
-      "Default": "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
-    },
-    "Subnet1" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "AvailabilityZone" : { "Fn::Select" : [ "0", {"Ref" : "VpcAzs"} ] },
-        "VpcId" :  { "Ref" : "VPC" },
-        "CidrBlock" : { "Fn::Select" : [ "0", {"Ref" : "DbSubnetIpBlocks"} ] }
-      }
-    },
-    "Subnet2" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "AvailabilityZone" : { "Fn::Select" : [ "1", {"Ref" : "VpcAzs"} ] },
-        "VpcId" : { "Ref" : "VPC" },
-        "CidrBlock" : { "Fn::Select" : [ "1", {"Ref" : "DbSubnetIpBlocks"} ] }
-      }
-    },
-    "Subnet3" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "AvailabilityZone" : { "Fn::Select" : [ "2", {"Ref" : "VpcAzs"} ] },
-        "VpcId" : { "Ref" : "VPC" },
-        "CidrBlock" : { "Fn::Select" : [ "2", {"Ref" : "DbSubnetIpBlocks"} ] }
-      }
-    },
-    "InternetGateway":{
-      "Type":"AWS::EC2::InternetGateway"
-    },
-    "VPCGatewayAttachment":{
-      "Type":"AWS::EC2::VPCGatewayAttachment",
-      "Properties":{
-        "VpcId":{
-          "Ref":"VPC"
-        },
-        "InternetGatewayId":{
-          "Ref":"InternetGateway"
-        }
-      }
-    },
-    "PublicRouteTable":{
-      "Type":"AWS::EC2::RouteTable",
-      "Properties":{
-        "VpcId":{
-          "Ref":"VPC"
-        }
-      }
-    },
-    "PublicRoute":{
-      "Type":"AWS::EC2::Route",
-      "DependsOn":"VPCGatewayAttachment",
-      "Properties":{
-        "RouteTableId":{
-          "Ref":"PublicRouteTable"
-        },
-        "DestinationCidrBlock":"0.0.0.0/0",
-        "GatewayId":{
-          "Ref":"InternetGateway"
-        }
-      }
-    },
-    "PublicSubnetRouteTableAssociation":{
-      "Type":"AWS::EC2::SubnetRouteTableAssociation",
-      "Properties":{
-        "SubnetId":{
-          "Ref":"PublicSubnet"
-        },
-        "RouteTableId":{
-          "Ref":"PublicRouteTable"
-        }
-      }
-    },
-    "WebServerSecurityGroup":{
-      "Type":"AWS::EC2::SecurityGroup",
-      "Properties":{
-        "VpcId":{
-          "Ref":"VPC"
-        },
-        "GroupDescription":"Allow access from HTTP and SSH traffic",
-        "SecurityGroupIngress":[
-          {
-            "IpProtocol":"tcp",
-            "FromPort":"80",
-            "ToPort":"80",
-            "CidrIp":"0.0.0.0/0"
-          },
-          {
-            "IpProtocol":"tcp",
-            "FromPort":"22",
-            "ToPort":"22",
-            "CidrIp":"0.0.0.0/0"
-          }
-        ]
-      }
-    },
-
-    "VpcId":{
-          "Ref":"VPC"
-    },
-
     "InstanceType" : {
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
@@ -158,6 +38,14 @@
   },
 
   "Mappings" : {
+
+    "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
+
+    "VpcAzs": {
+      "Description": "Comma-delimited list of three CIDR blocks",
+      "Type": "CommaDelimitedList",
+      "Default": "us-east-1a , us-east-1b , us-east-1c"
+    },
     "Region2Examples" : {
       "us-east-1"      : { "Examples" : "https://s3.amazonaws.com/cloudformation-examples-us-east-1" },
       "us-west-2"      : { "Examples" : "https://s3-us-west-2.amazonaws.com/cloudformation-examples-us-west-2" },
@@ -315,6 +203,118 @@
   },
 
   "Resources":{
+
+    "VpcId":{
+      "Ref":"VPC"
+    },
+
+    "VPC":{
+      "Type":"AWS::EC2::VPC",
+      "Properties":{
+        "EnableDnsSupport":"false",
+        "EnableDnsHostnames":"false",
+        "CidrBlock":"10.0.0.0/16"
+      }
+    },
+    "DbSubnetIpBlocks": {
+      "Description": "Comma-delimited list of three CIDR blocks",
+      "Type": "CommaDelimitedList",
+      "Default": "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
+    },
+    "Subnet1" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "AvailabilityZone" : { "Fn::Select" : [ "0", {"Ref" : "VpcAzs"} ] },
+        "VpcId" :  { "Ref" : "VPC" },
+        "CidrBlock" : { "Fn::Select" : [ "0", {"Ref" : "DbSubnetIpBlocks"} ] }
+      }
+    },
+    "Subnet2" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "AvailabilityZone" : { "Fn::Select" : [ "1", {"Ref" : "VpcAzs"} ] },
+        "VpcId" : { "Ref" : "VPC" },
+        "CidrBlock" : { "Fn::Select" : [ "1", {"Ref" : "DbSubnetIpBlocks"} ] }
+      }
+    },
+    "Subnet3" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "AvailabilityZone" : { "Fn::Select" : [ "2", {"Ref" : "VpcAzs"} ] },
+        "VpcId" : { "Ref" : "VPC" },
+        "CidrBlock" : { "Fn::Select" : [ "2", {"Ref" : "DbSubnetIpBlocks"} ] }
+      }
+    },
+    "InternetGateway":{
+      "Type":"AWS::EC2::InternetGateway"
+    },
+    "VPCGatewayAttachment":{
+      "Type":"AWS::EC2::VPCGatewayAttachment",
+      "Properties":{
+        "VpcId":{
+          "Ref":"VPC"
+        },
+        "InternetGatewayId":{
+          "Ref":"InternetGateway"
+        }
+      }
+    },
+    "PublicRouteTable":{
+      "Type":"AWS::EC2::RouteTable",
+      "Properties":{
+        "VpcId":{
+          "Ref":"VPC"
+        }
+      }
+    },
+    "PublicRoute":{
+      "Type":"AWS::EC2::Route",
+      "DependsOn":"VPCGatewayAttachment",
+      "Properties":{
+        "RouteTableId":{
+          "Ref":"PublicRouteTable"
+        },
+        "DestinationCidrBlock":"0.0.0.0/0",
+        "GatewayId":{
+          "Ref":"InternetGateway"
+        }
+      }
+    },
+    "PublicSubnetRouteTableAssociation":{
+      "Type":"AWS::EC2::SubnetRouteTableAssociation",
+      "Properties":{
+        "SubnetId":{
+          "Ref":"PublicSubnet"
+        },
+        "RouteTableId":{
+          "Ref":"PublicRouteTable"
+        }
+      }
+    },
+    "WebServerSecurityGroup":{
+      "Type":"AWS::EC2::SecurityGroup",
+      "Properties":{
+        "VpcId":{
+          "Ref":"VPC"
+        },
+        "GroupDescription":"Allow access from HTTP and SSH traffic",
+        "SecurityGroupIngress":[
+          {
+            "IpProtocol":"tcp",
+            "FromPort":"80",
+            "ToPort":"80",
+            "CidrIp":"0.0.0.0/0"
+          },
+          {
+            "IpProtocol":"tcp",
+            "FromPort":"22",
+            "ToPort":"22",
+            "CidrIp":"0.0.0.0/0"
+          }
+        ]
+      }
+    },  
+
     "NotificationTopic": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
