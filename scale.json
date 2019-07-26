@@ -10,7 +10,12 @@
     },
 
     "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
-    "VpcAzs" : [{"" : "-2b"}, {"" : "-3c"}, {"" : "-1a"}],
+    
+    "VpcAzs": {
+      "Description": "Comma-delimited list of three CIDR blocks",
+      "Type": "CommaDelimitedList",
+      "Default": "us-east-1a , us-east-1b , us-east-1c"
+    },
 
     "InstanceType" : {
       "Description" : "WebServer EC2 instance type",
@@ -223,7 +228,7 @@
     "Subnet1" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
-        "AvailabilityZone" : {"Fn::Join" : ["",[ { "Ref" : "AWS::Region" }, { "Fn::Select" : [ "0", {"Ref" : "VpcAzs"} ] } ] ]} ,
+        "AvailabilityZone" : { "Fn::Select" : [ "0", {"Ref" : "VpcAzs"} ] },
         "VpcId" :  { "Ref" : "VPC" },
         "CidrBlock" : { "Fn::Select" : [ "0", {"Ref" : "DbSubnetIpBlocks"} ] }
       }
@@ -231,7 +236,7 @@
     "Subnet2" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
-        "AvailabilityZone" : {"Fn::Join" : ["",[ { "Ref" : "AWS::Region" }, { "Fn::Select" : [ "1", {"Ref" : "VpcAzs"} ] } ] ]} ,
+        "AvailabilityZone" : { "Fn::Select" : [ "1", {"Ref" : "VpcAzs"} ] },
         "VpcId" : { "Ref" : "VPC" },
         "CidrBlock" : { "Fn::Select" : [ "1", {"Ref" : "DbSubnetIpBlocks"} ] }
       }
@@ -239,7 +244,7 @@
     "Subnet3" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
-        "AvailabilityZone" : {"Fn::Join" : ["",[ { "Ref" : "AWS::Region" }, { "Fn::Select" : [ "2", {"Ref" : "VpcAzs"} ] } ] ]} ,
+        "AvailabilityZone" : { "Fn::Select" : [ "2", {"Ref" : "VpcAzs"} ] },
         "VpcId" : { "Ref" : "VPC" },
         "CidrBlock" : { "Fn::Select" : [ "2", {"Ref" : "DbSubnetIpBlocks"} ] }
       }
