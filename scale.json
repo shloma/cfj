@@ -39,8 +39,6 @@
 
   "Mappings" : {
 
-    "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
-
     "VpcAzs": {
       "Description": "Comma-delimited list of three CIDR blocks",
       "Type": "CommaDelimitedList",
@@ -203,6 +201,8 @@
   },
 
   "Resources":{
+
+    "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
 
     "VpcId":{
       "Ref":"VPC"
