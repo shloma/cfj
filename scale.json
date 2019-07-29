@@ -199,9 +199,11 @@
 
   "Resources":{
 
-    "Subnets" :  [ "Subnet1id" , "Subnet2id" , "Subnet3id" ],
-
-
+    "Subnets" :  {
+      "Description": "Comma-delimited list of three CIDR blocks",
+      "Type": "CommaDelimitedList",
+      "Default": [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }]
+    },
     "Subnet1id" : {
       "Description" : "The IP address range that can be used to SSH to the EC2 instances",
       "Type": "String",
@@ -238,11 +240,13 @@
         "CidrBlock":"10.0.0.0/16"
       }
     },
+
     "DbSubnetIpBlocks": {
       "Description": "Comma-delimited list of three CIDR blocks",
       "Type": "CommaDelimitedList",
       "Default": "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
     },
+
     "Subnet1" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
