@@ -39,11 +39,8 @@
 
   "Mappings" : {
 
-    "VpcAzs": {
-      "Description": "Comma-delimited list of three CIDR blocks",
-      "Type": "CommaDelimitedList",
-      "Default": "us-east-1a , us-east-1b , us-east-1c"
-    },
+    "VpcAzs": { "Fn::GetAZs" : { "Ref" : "AWS::Region" } },
+
     "Region2Examples" : {
       "us-east-1"      : { "Examples" : "https://s3.amazonaws.com/cloudformation-examples-us-east-1" },
       "us-west-2"      : { "Examples" : "https://s3-us-west-2.amazonaws.com/cloudformation-examples-us-west-2" },
@@ -202,7 +199,32 @@
 
   "Resources":{
 
-    "Subnets" :  [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }],
+    "Subnets" :  [{ "Ref" : "Subnet1id" }, { "Ref" : "Subnet2id" }, { "Ref" : "Subnet3id" }],
+
+
+    "Subnet1id" : {
+      "Description" : "The IP address range that can be used to SSH to the EC2 instances",
+      "Type": "String",
+      "Default": {"Fn::GetAtt": [ "Subnet1", "logicalNameOfResource" ]},
+      "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
+      "ConstraintDescription": "must be an id"
+    },
+
+    "Subnet2id" : {
+      "Description" : "The IP address range that can be used to SSH to the EC2 instances",
+      "Type": "String",
+      "Default": {"Fn::GetAtt": [ "Subnet2", "logicalNameOfResource" ]},
+      "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
+      "ConstraintDescription": "must be an id"
+    },
+
+    "Subnet3id" : {
+      "Description" : "The IP address range that can be used to SSH to the EC2 instances",
+      "Type": "String",
+      "Default": {"Fn::GetAtt": [ "Subnet3", "logicalNameOfResource" ]},
+      "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
+      "ConstraintDescription": "must be an id"
+    },
 
     "VpcId":{
       "Ref":"VPC"
