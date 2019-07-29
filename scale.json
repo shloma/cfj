@@ -199,7 +199,7 @@
 
   "Resources":{
 
-    "Subnets" :  [{ "Ref" : "Subnet1id" }, { "Ref" : "Subnet2id" }, { "Ref" : "Subnet3id" }],
+    "Subnets" :  [ "Subnet1id" , "Subnet2id" , "Subnet3id" ],
 
 
     "Subnet1id" : {
