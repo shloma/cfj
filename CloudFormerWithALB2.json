@@ -647,7 +647,7 @@
                     }
                 ],
                 "Type" : "application",
-                "SubnetMappings": [
+                "Subnets" : [
                     {
                         "SubnetId": {
                             "Ref": "Subnet3"
