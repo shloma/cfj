@@ -638,7 +638,25 @@
         },
         "MyAlb": {
             "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
-            "Properties": {},
+            "Properties": {
+                "SubnetMappings": [
+                    {
+                        "SubnetId": {
+                            "Ref": "Subnet3"
+                        }
+                    },
+                    {
+                        "SubnetId": {
+                            "Ref": "Subnet2"
+                        }
+                    },
+                    {
+                        "SubnetId": {
+                            "Ref": "Subnet1"
+                        }
+                    }
+                ]
+            },
             "Metadata": {
                 "AWS::CloudFormation::Designer": {
                     "id": "7ebfedfb-2a20-49d0-a117-f4006e3a5ee2"
@@ -1148,6 +1166,11 @@
                 "z": 2,
                 "parent": "93c6687c-9a32-478d-90a9-b15bab0dd28d",
                 "embeds": [],
+                "iscontainedinside": [
+                    "d08e6d12-1530-40cf-9525-7d631834e797",
+                    "cec675dc-49dd-4e2b-a9eb-2b4ed8121cdf",
+                    "585ee825-7022-4899-984a-1a20acbbe5a7"
+                ],
                 "dependson": [
                     "d08e6d12-1530-40cf-9525-7d631834e797",
                     "cec675dc-49dd-4e2b-a9eb-2b4ed8121cdf",
@@ -1192,6 +1215,33 @@
                     "id": "7ebfedfb-2a20-49d0-a117-f4006e3a5ee2"
                 },
                 "z": 6
+            },
+            "dec0bd15-4b4d-4f7b-9887-53cde8bef3c1": {
+                "source": {
+                    "id": "7ebfedfb-2a20-49d0-a117-f4006e3a5ee2"
+                },
+                "target": {
+                    "id": "d08e6d12-1530-40cf-9525-7d631834e797"
+                },
+                "z": 7
+            },
+            "bb747de6-6421-4e29-b723-a4a3d37d7f8a": {
+                "source": {
+                    "id": "7ebfedfb-2a20-49d0-a117-f4006e3a5ee2"
+                },
+                "target": {
+                    "id": "cec675dc-49dd-4e2b-a9eb-2b4ed8121cdf"
+                },
+                "z": 8
+            },
+            "2636054e-f35c-4d28-979e-3939b8227e19": {
+                "source": {
+                    "id": "7ebfedfb-2a20-49d0-a117-f4006e3a5ee2"
+                },
+                "target": {
+                    "id": "585ee825-7022-4899-984a-1a20acbbe5a7"
+                },
+                "z": 9
             }
         }
     }
