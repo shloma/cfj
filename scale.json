@@ -199,11 +199,6 @@
 
   "Resources":{
 
-    "Subnets" :  {
-      "Description": "Comma-delimited list of three CIDR blocks",
-      "Type": "CommaDelimitedList",
-      "Default": [{ "Ref" : "Subnet1" }, { "Ref" : "Subnet2" }, { "Ref" : "Subnet3" }]
-    },
     "Subnet1id" : {
       "Description" : "The IP address range that can be used to SSH to the EC2 instances",
       "Type": "String",
@@ -583,7 +578,7 @@
         "Name": "SGExported"
       }
     }
-    }
   }
+}
 
 
