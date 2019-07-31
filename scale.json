@@ -311,11 +311,11 @@
     "WebServerGroup" : {
       "Type" : "AWS::AutoScaling::AutoScalingGroup",
       "Properties" : {
-        "VPCZoneIdentifier" : [
+        "VPCZoneIdentifier" : {"some" : [
             {"Ref" : "Subnet1" },
             {"Ref" : "Subnet2" },
             {"Ref" : "Subnet3" },
-        ],
+        ]},
         "LaunchConfigurationName" : { "Ref" : "LaunchConfig" },
         "MinSize" : "1",
         "MaxSize" : "3",
