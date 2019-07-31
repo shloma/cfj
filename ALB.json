@@ -1,4 +1,5 @@
 {
+  "Resources": {
 	 "ApplicationLoadBalancer" : {
       "Type" : "AWS::ElasticLoadBalancingV2::LoadBalancer",
       "Properties" : {
@@ -46,6 +47,5 @@
         "VpcId" : { "Fn::ImportValue" : "VPCExported"  }
       }
     }
-
-
+  }
 }
