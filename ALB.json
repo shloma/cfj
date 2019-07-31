@@ -26,12 +26,26 @@
       "Properties" : {
         "DefaultActions" : [{
           "Type" : "forward",
-          "TargetGroupArn" : { "Fn::ImportValue" : "ALBTGExported"  }
+          "TargetGroupArn" : { "Ref" : "ALBTargetGroup"  }
         }],
         "LoadBalancerArn" : { "Ref" : "ApplicationLoadBalancer" },
         "Port" : "80",
         "Protocol" : "HTTP"
       }
+    },
+
+    "ALBTargetGroup" : {
+      "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties" : {
+        "HealthCheckIntervalSeconds" : 30,
+        "HealthCheckTimeoutSeconds" : 5,
+        "HealthyThresholdCount" : 3,
+        "Port" : 80,
+        "Protocol" : "HTTP",
+        "UnhealthyThresholdCount" : 5,
+        "VpcId" : { "Fn::ImportValue" : "VPCExported"  }
+      }
     }
+
 
 }

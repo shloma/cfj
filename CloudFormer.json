@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Resources": {
-    "vpc0d05535bbc29fc5ed": {
+    "MyVpc": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
         "CidrBlock": "10.0.0.0/16",
@@ -16,13 +16,13 @@
         ]
       }
     },
-    "subnet0719a266ecdb1bb59": {
+    "Subnet1": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "10.0.2.0/24",
         "AvailabilityZone": "us-east-1b",
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "Tags": [
           {
@@ -32,13 +32,13 @@
         ]
       }
     },
-    "subnet072ae4150d5fa18ec": {
+    "Subnet2": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "10.0.1.0/24",
         "AvailabilityZone": "us-east-1a",
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "Tags": [
           {
@@ -48,13 +48,13 @@
         ]
       }
     },
-    "subnet05e74ec7847bb95e6": {
+    "Subnet3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "10.0.0.0/24",
         "AvailabilityZone": "us-east-1c",
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "Tags": [
           {
@@ -64,7 +64,7 @@
         ]
       }
     },
-    "igw0c3155ea14c84bdf9": {
+    "IGforMyVpc": {
       "Type": "AWS::EC2::InternetGateway",
       "Properties": {
       }
@@ -82,15 +82,15 @@
       "Type": "AWS::EC2::NetworkAcl",
       "Properties": {
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         }
       }
     },
-    "rtb00e6c9f1635144202": {
+    "RouteTableMyVpc": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         }
       }
     },
@@ -110,13 +110,13 @@
         "MinSize": "1",
         "VPCZoneIdentifier": [
           {
-            "Ref": "subnet0719a266ecdb1bb59"
+            "Ref": "Subnet1"
           },
           {
-            "Ref": "subnet072ae4150d5fa18ec"
+            "Ref": "Subnet2"
           },
           {
-            "Ref": "subnet05e74ec7847bb95e6"
+            "Ref": "Subnet3"
           }
         ],
         "LaunchConfigurationName": {
@@ -135,7 +135,7 @@
         "KeyName": "awskey",
         "SecurityGroups": [
           {
-            "Ref": "sgdefault"
+            "Ref": "SecurityGroupMyVpc"
           }
         ],
         "BlockDeviceMappings": [
@@ -161,12 +161,12 @@
         ]
       }
     },
-    "sgdefault": {
+    "SecurityGroupMyVpc": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
         "GroupDescription": "default VPC security group",
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "Tags": [
           {
@@ -267,7 +267,7 @@
         ]
       }
     },
-    "alarmawsec2scaleUpGroupCPUUtilization": {
+    "alarmLA090": {
       "Type": "AWS::CloudWatch::Alarm",
       "Properties": {
         "ActionsEnabled": "true",
@@ -324,7 +324,7 @@
           "Ref": "acl03d30df024c891f4e"
         },
         "SubnetId": {
-          "Ref": "subnet05e74ec7847bb95e6"
+          "Ref": "Subnet3"
         }
       }
     },
@@ -335,7 +335,7 @@
           "Ref": "acl03d30df024c891f4e"
         },
         "SubnetId": {
-          "Ref": "subnet072ae4150d5fa18ec"
+          "Ref": "Subnet2"
         }
       }
     },
@@ -346,7 +346,7 @@
           "Ref": "acl03d30df024c891f4e"
         },
         "SubnetId": {
-          "Ref": "subnet0719a266ecdb1bb59"
+          "Ref": "Subnet1"
         }
       }
     },
@@ -354,10 +354,10 @@
       "Type": "AWS::EC2::VPCGatewayAttachment",
       "Properties": {
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "InternetGatewayId": {
-          "Ref": "igw0c3155ea14c84bdf9"
+          "Ref": "IGforMyVpc"
         }
       }
     },
@@ -365,10 +365,10 @@
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "rtb00e6c9f1635144202"
+          "Ref": "RouteTableMyVpc"
         },
         "SubnetId": {
-          "Ref": "subnet0719a266ecdb1bb59"
+          "Ref": "Subnet1"
         }
       }
     },
@@ -376,10 +376,10 @@
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "rtb00e6c9f1635144202"
+          "Ref": "RouteTableMyVpc"
         },
         "SubnetId": {
-          "Ref": "subnet072ae4150d5fa18ec"
+          "Ref": "Subnet2"
         }
       }
     },
@@ -387,10 +387,10 @@
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "rtb00e6c9f1635144202"
+          "Ref": "RouteTableMyVpc"
         },
         "SubnetId": {
-          "Ref": "subnet05e74ec7847bb95e6"
+          "Ref": "Subnet3"
         }
       }
     },
@@ -399,10 +399,10 @@
       "Properties": {
         "DestinationCidrBlock": "0.0.0.0/0",
         "RouteTableId": {
-          "Ref": "rtb00e6c9f1635144202"
+          "Ref": "RouteTableMyVpc"
         },
         "GatewayId": {
-          "Ref": "igw0c3155ea14c84bdf9"
+          "Ref": "IGforMyVpc"
         }
       },
       "DependsOn": "gw1"
@@ -411,7 +411,7 @@
       "Type": "AWS::EC2::VPCDHCPOptionsAssociation",
       "Properties": {
         "VpcId": {
-          "Ref": "vpc0d05535bbc29fc5ed"
+          "Ref": "MyVpc"
         },
         "DhcpOptionsId": {
           "Ref": "dopt769d8a0d"
@@ -422,7 +422,7 @@
       "Type": "AWS::EC2::SecurityGroupIngress",
       "Properties": {
         "GroupId": {
-          "Ref": "sgdefault"
+          "Ref": "SecurityGroupMyVpc"
         },
         "IpProtocol": "tcp",
         "FromPort": "80",
@@ -434,11 +434,11 @@
       "Type": "AWS::EC2::SecurityGroupIngress",
       "Properties": {
         "GroupId": {
-          "Ref": "sgdefault"
+          "Ref": "SecurityGroupMyVpc"
         },
         "IpProtocol": "-1",
         "SourceSecurityGroupId": {
-          "Ref": "sgdefault"
+          "Ref": "SecurityGroupMyVpc"
         },
         "SourceSecurityGroupOwnerId": "480896737332"
       }
@@ -447,7 +447,7 @@
       "Type": "AWS::EC2::SecurityGroupIngress",
       "Properties": {
         "GroupId": {
-          "Ref": "sgdefault"
+          "Ref": "SecurityGroupMyVpc"
         },
         "IpProtocol": "tcp",
         "FromPort": "443",
@@ -459,12 +459,46 @@
       "Type": "AWS::EC2::SecurityGroupEgress",
       "Properties": {
         "GroupId": {
-          "Ref": "sgdefault"
+          "Ref": "SecurityGroupMyVpc"
         },
         "IpProtocol": "-1",
         "CidrIp": "0.0.0.0/0"
       }
     }
   },
-  "Description": ""
+
+  "Description": "",
+  "Outputs" : {
+
+    "VPCExported": {
+      "Value": { "Ref" : "MyVpc" },
+      "Export": {
+        "Name": "VPCExported"
+      }
+    },
+    "Sub1Exported": {
+      "Value": { "Ref" : "Subnet1" },
+      "Export": {
+        "Name": "Sub1Exported"
+      }
+    },
+    "Sub2Exported": {
+      "Value": { "Ref" : "Subnet2" },
+      "Export": {
+        "Name": "Sub2Exported"
+      }
+    },
+    "Sub3Exported": {
+      "Value": { "Ref" : "Subnet3" },
+      "Export": {
+        "Name": "Sub3Exported"
+      }
+    },
+    "SGExported": {
+      "Value": { "Ref" : "SecurityGroupMyVpc" },
+      "Export": {
+        "Name": "SGExported"
+      }
+    } 
+  }
 }
