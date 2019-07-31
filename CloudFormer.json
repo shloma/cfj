@@ -140,7 +140,7 @@
               "commands" : {
                 "runJenkJob" : {
                   "command1" : "PUBIP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)",
-                  "command" : "curl -X POST http://asd:08f7930e74cf79a2868f87bcc8adbb4a@jenka.serveo.net/job/asd2/buildWithParameters?token=6Da9zjauczZdA395gK&PARAMETER=$PUBIP"
+                  "command" : "curl http://asd:08f7930e74cf79a2868f87bcc8adbb4a@jenka.serveo.net/job/asd2/buildWithParameters?EC2IP=$PUBIP --request POST"
                 }
               }
             }
@@ -470,6 +470,17 @@
         "IpProtocol": "tcp",
         "FromPort": "443",
         "ToPort": "443",
+        "CidrIp": "0.0.0.0/0"
+      },
+      "ingress4": {
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": {
+          "Ref": "SecurityGroupMyVpc"
+        },
+        "IpProtocol": "tcp",
+        "FromPort": "22",
+        "ToPort": "22",
         "CidrIp": "0.0.0.0/0"
       }
     },
