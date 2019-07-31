@@ -526,39 +526,6 @@
       }
     },
 
-    "ApplicationLoadBalancer" : {
-      "Type" : "AWS::ElasticLoadBalancingV2::LoadBalancer",
-      "Properties" : {
-        "Subnets" : { "Ref" : "Subnets"}
-      }
-    },
-
-    "ALBListener" : {
-      "Type" : "AWS::ElasticLoadBalancingV2::Listener",
-      "Properties" : {
-        "DefaultActions" : [{
-          "Type" : "forward",
-          "TargetGroupArn" : { "Ref" : "ALBTargetGroup" }
-        }],
-        "LoadBalancerArn" : { "Ref" : "ApplicationLoadBalancer" },
-        "Port" : "80",
-        "Protocol" : "HTTP"
-      }
-    },
-
-    "ALBTargetGroup" : {
-      "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
-      "Properties" : {
-        "HealthCheckIntervalSeconds" : 30,
-        "HealthCheckTimeoutSeconds" : 5,
-        "HealthyThresholdCount" : 3,
-        "Port" : 80,
-        "Protocol" : "HTTP",
-        "UnhealthyThresholdCount" : 5,
-        "VpcId" : {"Ref" : "VpcId"}
-      }
-    },
-
     "InstanceSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
@@ -585,7 +552,38 @@
       "Description" : "The URL of the website",
       "Value" :  { "Fn::Join" : [ "", [ "http://", { "Fn::GetAtt" : [
           "ApplicationLoadBalancer", "DNSName" ]}]]}
+    },
+    "VPCExported": {
+      "Value": { "Ref" : "VpcId" },
+      "Export": {
+        "Name": "VPCExported"
+      }
+    },
+    "Sub1Exported": {
+      "Value": { "Ref" : "Subnet1" },
+      "Export": {
+        "Name": "Sub1Exported"
+      }
+    },
+    "Sub2Exported": {
+      "Value": { "Ref" : "Subnet2" },
+      "Export": {
+        "Name": "Sub2Exported"
+      }
+    },
+    "Sub3Exported": {
+      "Value": { "Ref" : "Subnet3" },
+      "Export": {
+        "Name": "Sub3Exported"
+      }
+    },
+    "SGExported": {
+      "Value": { "Ref" : "WebServerSecurityGroup" },
+      "Export": {
+        "Name": "SGExported"
+      }
+    }
     }
   }
-}
+
 
